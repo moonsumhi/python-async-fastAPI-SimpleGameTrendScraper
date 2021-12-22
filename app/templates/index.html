@@ -1,0 +1,50 @@
+<html lang="en">
+  <head>
+    <title>{{title}}</title>
+    <link href="https://unpkg.com/mvp.css" rel="stylesheet" />
+  </head>
+  <style>
+    section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+  </style>
+  <body>
+    <header>
+      <h1>게임 트렌드 수집</h1>
+      <center>
+        <form id="search_form" action="/search">
+          <input
+            type="search"
+            placeholder="keyword"
+            id="search_input"
+            name="q"
+          />
+          <button type="submit">검색</button>
+        </form>
+      </center>
+    </header>
+    <main>
+      {% if games %}
+      <!--  -->
+      <center>
+        <h3 style="color: gray">{{games|length}}개 데이터 수집..</h3>
+      </center>
+      <section>
+        {% for game in games %}
+        <div>
+          <p>
+            Title: {{game.name}}, EntName: {{game.entname}}, GivenRate: {{game.givenrate}}
+            <br>
+          </p>
+        </div>
+        {% endfor %}
+      </section>
+      <!--  -->
+      {% else %}
+      <center><h3 style="color: gray">Please Input Keyword...</h3></center>
+      {% endif %}
+    </main>
+  </body>
+</html>
