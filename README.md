@@ -1,94 +1,29 @@
-#게임 트렌드 수집
-##python의 동시성 프로그래밍, fastAPI를 통해 간단한 게임 트렌드 scrapper를 제작하였습니다.
+# 게임 트렌드 수집 프로그램
 
-1. 사용 기술: fastAPI, MongoDB, ODMantic
-2. 사용 API: Naver, Kakao, 게임물관리위원회 게임API
-3. 프로젝트 목적: 
-4. 시퀀스 다이어그램:
-# Project Title
+python의 동시성 프로그래밍, fastAPI를 통해 간단한 게임 트렌드 scrapper를 제작하였습니다.
+[Inflearn](https://www.inflearn.com/course/%ED%8C%8C%EC%9D%B4%EC%8D%AC-%EB%8F%99%EC%8B%9C%EC%84%B1-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D) 
+수강 후 강의 내용 기반으로 제작한 토이 프로젝트 입니다.
 
-One Paragraph of project description goes here
+## Prerequisites
 
-## Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-
-### Prerequisites
-
-What things you need to install the software and how to install them
-
-```
-Give examples
-```
-
-### Installing
-
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
+requirements.txt에서 사용한 라이브러리를 확인할 수 있습니다.
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+* [FastAPI](https://fastapi.tiangolo.com/) - The web framework used
+* [NaverAPI](https://developers.naver.com/main/) - Naver cafe data scrapping
+* [KakaoAPI](https://developers.kakao.com/) - Kakao cafe data scrapping
+* [GameAPI](https://www.grac.or.kr/Game3.0/OpenAPI.aspx) - Game title, Ent name, Given rate data used
+* [MongoDB](https://www.mongodb.com/) - Used to store data
+* [ODMantic](https://art049.github.io/odmantic/) - Used to map between FastAPI and MongoDB
+* [Uvicorn](https://www.uvicorn.org/) - ASGI serer implementation
 
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+* **Moon Sumee** - *Initial work* - https://github.com/moonsumhi
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
