@@ -10,6 +10,7 @@ from app.counting import UpdateDB
 
 app = FastAPI(title="데이터 수집가")
 templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
+keywords = []
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -26,6 +27,8 @@ async def search_result(request: Request):
         context = {"request": request}
         return templates.TemplateResponse("index.html", context=context)
 
+    keywords.append(keyword)
+
     naver_scraper = NaverScraper()
     kakao_scraper = KakaoScraper()
 
@@ -33,9 +36,35 @@ async def search_result(request: Request):
     kakao_data = await kakao_scraper.search(keyword, 10)
 
     updatedb = UpdateDB()
-    games = await updatedb.update_db_cnt(keyword, naver_data + kakao_data, 2)
+    games = await updatedb.update_add_db_cnt(keyword, naver_data + kakao_data, 2)
     games = games[:20]
-    context = {"request": request, "keyword": keyword, "games": games}
+    context = {
+        "request": request,
+        "keyword": keyword,
+        "games": games,
+        "keywords": keywords,
+    }
+    return templates.TemplateResponse("index.html", context=context)
+
+
+@app.get("/delete", response_class=HTMLResponse)
+async def delete_collection(request: Request):
+    keyword = request.query_params.get("d")
+
+    if not keyword:
+        context = {"request": request}
+        return templates.TemplateResponse("index.html", context=context)
+
+    keywords.remove(keyword)
+    updatedb = UpdateDB()
+    games = await updatedb.update_delete_mongodb(keyword)
+    games = games[:20]
+    context = {
+        "request": request,
+        "keyword": keyword,
+        "games": games,
+        "keywords": keywords,
+    }
     return templates.TemplateResponse("index.html", context=context)
 
 

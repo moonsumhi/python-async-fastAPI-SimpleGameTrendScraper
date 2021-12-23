@@ -21,7 +21,17 @@
             id="search_input"
             name="q"
           />
-          <button type="submit">검색</button>
+          <button type="submit">추가</button>
+        </form>
+        Current keywords: {{keywords}} <br>
+        <form id="delete_form" action="/delete">
+          <input
+            type="search"
+            placeholder="keyword"
+            id="delete_input"
+            name="d"
+          />
+          <button type="submit">삭제</button>
         </form>
       </center>
     </header>
