@@ -59,7 +59,6 @@ class UpdateDB:
 
     async def update_delete_mongodb(self, key: str):
         games = await mongodb.engine.find(GameModel, GameModel.keywords.in_([key]))
-        print(games)
         await asyncio.gather(*[UpdateDB.delete_mongodb(key, game) for game in games])
         results = await mongodb.engine.find(GameModel)
         sorted_results = sorted(results, key=lambda x: -x.count)

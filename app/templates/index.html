@@ -9,10 +9,14 @@
       flex-wrap: wrap;
       gap: 15px;
     }
+    table{
+      width: 100%;
+    }
   </style>
   <body>
     <header>
       <h1>게임 트렌드 수집</h1>
+      <h3>Current keywords: {{keywords}}</h3>
       <center>
         <form id="search_form" action="/search">
           <input
@@ -23,7 +27,6 @@
           />
           <button type="submit">추가</button>
         </form>
-        Current keywords: {{keywords}} <br>
         <form id="delete_form" action="/delete">
           <input
             type="search"
@@ -35,26 +38,35 @@
         </form>
       </center>
     </header>
-    <main>
-      {% if games %}
-      <!--  -->
-      <center>
+    <center>
         <h3 style="color: gray">{{games|length}}개 데이터 수집..</h3>
-      </center>
-      <section>
-        {% for game in games %}
-        <div>
-          <p>
-            Title: {{game.name}}, EntName: {{game.entname}}, GivenRate: {{game.givenrate}}
-            <br>
-          </p>
-        </div>
-        {% endfor %}
-      </section>
-      <!--  -->
-      {% else %}
+    </center>
+    <main>
+        {% if games %}
+        <section>
+          <center><table border>
+		  <tr bgcolor="#BDBDBD" font color="white">
+		   <th>순위</th>
+		   <th>타이틀</th>
+		   <th>배급사</th>
+		   <th>빈도수</th>
+		   <th>등급 분류</th>
+		  </tr>
+          {% for game in games %}
+          <tr>
+		   <td align="center">{{loop.index}}</td>
+		   <td>{{game.name}}</td>
+		   <td align="right">{{game.entname}}</td>
+		   <td>{{game.count}}</td>
+		   <td align="center">{{game.givenrate}}</td>
+		  </tr>
+          {% endfor %}
+        </section>
+
+        {% else %}
       <center><h3 style="color: gray">Please Input Keyword...</h3></center>
       {% endif %}
+      </table></center>
     </main>
   </body>
 </html>

@@ -10,7 +10,7 @@ from app.counting import UpdateDB
 
 app = FastAPI(title="데이터 수집가")
 templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
-keywords = []
+keywords = set()
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -27,7 +27,7 @@ async def search_result(request: Request):
         context = {"request": request}
         return templates.TemplateResponse("index.html", context=context)
 
-    keywords.append(keyword)
+    keywords.add(keyword)
 
     naver_scraper = NaverScraper()
     kakao_scraper = KakaoScraper()
@@ -38,6 +38,7 @@ async def search_result(request: Request):
     updatedb = UpdateDB()
     games = await updatedb.update_add_db_cnt(keyword, naver_data + kakao_data, 2)
     games = games[:20]
+
     context = {
         "request": request,
         "keyword": keyword,
@@ -55,7 +56,7 @@ async def delete_collection(request: Request):
         context = {"request": request}
         return templates.TemplateResponse("index.html", context=context)
 
-    keywords.remove(keyword)
+    keywords.discard(keyword)
     updatedb = UpdateDB()
     games = await updatedb.update_delete_mongodb(keyword)
     games = games[:20]
