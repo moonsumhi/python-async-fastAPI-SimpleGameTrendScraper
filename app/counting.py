@@ -13,6 +13,12 @@ import asyncio
 class UpdateDB:
     @staticmethod
     async def add_mongodb(key: str, game_name: str, game_info: Dict, words_cnt: Dict):
+
+        # count 계산
+        count = 0
+        for gn in game_name:
+            count += words_cnt[gn]
+
         if await mongodb.engine.find_one(
             GameModel, GameModel.name == game_info["gametitle"]
         ):
@@ -22,15 +28,15 @@ class UpdateDB:
             # 찾은 game_model의 키워드로 검색했던 이력이 있다면 더해주지 않고 리턴한다.
             if key not in game_model.keywords:
                 game_model.keywords = game_model.keywords + [key]
-                game_model.keyword.append({"key": key, "cnt": words_cnt[game_name]})
-                game_model.count = game_model.count + words_cnt[game_name]
+                game_model.keyword.append({"key": key, "cnt": count})
+                game_model.count = game_model.count + count
                 await mongodb.engine.save(game_model)
         else:
             game_model = GameModel(
                 keywords=[key],
-                keyword=[{"key": key, "cnt": words_cnt[game_name]}],
+                keyword=[{"key": key, "cnt": count}],
                 name=game_info["gametitle"],
-                count=words_cnt[game_name],
+                count=count,
                 entname=game_info["entname"],
                 givenrate=game_info["givenrate"],
             )
@@ -70,7 +76,8 @@ class UpdateDB:
         for game in games:
             title = game["title"]
             title = re.sub("<[^>]+>", "", title)
-            title = re.sub("[-=+,#/\?:^.@*\"※~ㆍ!』‘|\(\)\[\]`'…》\”\“\’·]", "", title)
+            title = re.sub("&[^&]+;", "", title)
+            title = re.sub("[-=+,#/\?:^.@*\"※~ㆍ!』‘|\(\)\[\]`'…》\”\’·]", "", title)
             word_list = title.split()
             for word in word_list:
                 word = word.strip()
@@ -87,10 +94,25 @@ class UpdateDB:
         game_search = GameSearch()
         searched_game_list = await game_search.search(words_cnt.keys())
 
+        # 중복 제거
+        game_dict = {}
+        drop_replica_game_list = []
+        for idx in range(len(searched_game_list)):
+            cur = searched_game_list[idx]
+            cur_gametitle = cur["gameinfo"]["gametitle"]
+            if cur_gametitle in game_dict.keys():
+                origin_idx = game_dict[cur_gametitle]
+                origin = drop_replica_game_list[origin_idx]
+                origin["gamename"].append(cur["gamename"])
+            else:
+                game_dict[cur_gametitle] = len(game_dict)
+                cur["gamename"] = [cur["gamename"]]
+                drop_replica_game_list.append(cur)
+
         await asyncio.gather(
             *[
                 UpdateDB.add_mongodb(key, game["gamename"], game["gameinfo"], words_cnt)
-                for game in searched_game_list
+                for game in drop_replica_game_list
             ]
         )
 

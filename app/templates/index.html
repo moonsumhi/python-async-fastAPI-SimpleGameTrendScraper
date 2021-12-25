@@ -55,7 +55,7 @@
           {% for game in games %}
           <tr>
 		   <td align="center">{{loop.index}}</td>
-		   <td>{{game.name}}</td>
+		   <td><a href="https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query={{game.name}}">{{game.name}}</a></td>
 		   <td align="right">{{game.entname}}</td>
 		   <td>{{game.count}}</td>
 		   <td align="center">{{game.givenrate}}</td>
