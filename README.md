@@ -1,8 +1,7 @@
 # 게임 트렌드 수집 프로그램
 
 python의 동시성 프로그래밍, fastAPI를 통해 간단한 게임 트렌드 scrapper를 제작하였습니다.
-[Inflearn](https://www.inflearn.com/course/%ED%8C%8C%EC%9D%B4%EC%8D%AC-%EB%8F%99%EC%8B%9C%EC%84%B1-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D) 
-수강 후 강의 내용 기반으로 제작한 토이 프로젝트 입니다.
+
 
 ## Prerequisites
 
