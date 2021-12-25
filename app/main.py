@@ -8,7 +8,7 @@ from app.models import mongodb
 from app.counting import UpdateDB
 
 
-app = FastAPI(title="데이터 수집가")
+app = FastAPI(title="게임 트렌드 데이터 수집")
 templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
 keywords = set()
 

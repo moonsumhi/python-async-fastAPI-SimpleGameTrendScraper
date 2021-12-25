@@ -25,5 +25,5 @@ requirements.txt에서 사용한 라이브러리를 확인할 수 있습니다.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License
 
